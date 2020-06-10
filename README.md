@@ -13,15 +13,15 @@ flask=1.1.2
 
 pymongo=3.10.1
 
-##Setup
+## Setup
 1. install pip3
 
 2. pipenv shell
 
 3. pip install -r requirments.txt
 
-#Updating requirments
+# Updating requirments
 pip freeze > requirments.txt
 
-##To Run
+## To Run
 python app.py
