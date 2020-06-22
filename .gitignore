@@ -2,3 +2,5 @@
 
 /main/data/db
 .env
+*.swp
+*.swo
