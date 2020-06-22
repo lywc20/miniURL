@@ -24,4 +24,4 @@ pymong=3.10.1
 pip freeze > requirments.txt
 
 ##To Run
-python app.py
+flask run
