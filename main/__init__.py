@@ -5,13 +5,14 @@ from settings import Config
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,instance_relative_config=False)
 
     app.config.from_object(Config)
 
     mongo.init_app(app)
 
-    app.register_blueprint(main)
+    with app.app_context():
+        app.register_blueprint(main)
 
-    return app
+        return app
 

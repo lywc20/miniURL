@@ -9,10 +9,16 @@
     <h1 style="text-align: center">Welcome to miniURL</h1>
     <br>
     <br>
+    {% if g.url %}
+        <div style="text-align: center" class="jumbotron">
+            <h1>Success!</h1>
+            <p>We've minified {{ g.url }} into {{ g.short_url }}</p>
+        </div>
+    {% endif %}
     <div style="text-align: center" class="form">
         <form action="/" method="POST">
             <p1>Enter a URL to minify!</p1>
-            <input type="text" placeholder="URL" name="content" id="content">
+            <input type="text" placeholder="URL" name="url" id="content">
             <input type="submit" value="minify">
         </form>
     </div>

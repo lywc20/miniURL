@@ -1,10 +1,24 @@
-from flask import Flask, render_template, request, Blueprint
+from flask import Flask, render_template, request, Blueprint, g
+from .extensions import mongo
+from .api import key_generator
 
 main = Blueprint('main',__name__)
 
-@main.route('/')
+@main.route('/',methods=['POST','GET'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        short_url = key_generator.generateKey()
+        url = request.form['url']
+        key_generator.bindUrl(short_url,url)
+        g.url = url
+        g.short_url = short_url
+        return render_template('index.html')
+    else:
+        return render_template('index.html')
+
+@main.route('/success/<string:short_url>')
+def success(url):
+    return "The url is " + url
 
 @main.route('/login')
 def login():
