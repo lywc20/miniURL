@@ -12,7 +12,7 @@
     {% if g.url %}
         <div style="text-align: center" class="jumbotron">
             <h1>Success!</h1>
-            <p>We've minified {{ g.url }} into {{ g.short_url }}</p>
+            <p>We've minified {{ g.url }} into <a href={{ "http://localhost:5000/" + g.short_url + "/" }}>{{ "http://localhost:5000/" + g.short_url + "/" }}</a></p>
         </div>
     {% endif %}
     <div style="text-align: center" class="form">
