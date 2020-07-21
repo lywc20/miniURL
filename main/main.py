@@ -21,7 +21,11 @@ def index():
 def redirect_to_mapped_site(short_url):
     if request.method == 'GET':
         res = key_generator.findUrl(short_url)
-        return redirect('https:' + res['url'])
+        if res:
+            return redirect('https:' + res['url'])
+        else:
+            return render_template('404.html'),404
+
 
 @main.route('/login')
 def login():
@@ -38,9 +42,6 @@ def register():
         newAccount = account(user,password,email)
     else:
         return render_template('register.html')
-
-
-
 
 if __name__ == '__main__':
     main.run(debug=True)
