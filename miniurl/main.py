@@ -1,18 +1,23 @@
 from flask import Flask, render_template, request, Blueprint, g, redirect
 from .extensions import mongo
 from .api import key_generator
-
+from .models import URL_Form
 main = Blueprint('main',__name__)
+import sys
 
 @main.route('/',methods=['POST','GET'])
 def index():
     if request.method == 'POST':
-        short_url = key_generator.generateKey()
-        url = request.form['url']
-        key_generator.bindUrl(short_url,url)
-        g.url = url
-        g.short_url = short_url
-        return render_template('index.html')
+        url = URL_Form(request.form)
+        if not url.validate():
+            g.errors = url.errors
+            return render_template('index.html')
+        else:
+            short_url = key_generator.generateKey()
+            key_generator.bindUrl(short_url,url.url.data)
+            g.url = url.url.data
+            g.short_url = short_url
+            return render_template('index.html')
     else:
         return render_template('index.html')
 

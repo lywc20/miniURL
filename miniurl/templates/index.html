@@ -14,11 +14,14 @@
             <h1>Success!</h1>
             <p>We've minified {{ g.url }} into <a href={{ "http://localhost:5000/" + g.short_url + "/" }}>{{ "http://localhost:5000/" + g.short_url + "/" }}</a></p>
         </div>
+    {% elif g.errors %}
+        <div style="text-align: center margin: 0" class="alert alert-warning" role="alert">Error: Please enter a valid URL
+        </div>
     {% endif %}
     <div style="text-align: center" class="form">
         <form action="/" method="POST">
             <p1>Enter a URL to minify!</p1>
-            <input type="text" placeholder="URL" name="url" id="content">
+            <input type="text" placeholder="URL" name="url" id="content" value="{{ request.form['url'] }}" required >
             <input type="submit" value="minify">
         </form>
     </div>

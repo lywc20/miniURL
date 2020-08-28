@@ -1,6 +1,9 @@
 #EXCLUDE THE FOLLOWING
 
+/.vscode/
+/miniurl/data/db
 /main/data/db
+/instance/*
 .env
 *.swp
 *.swo

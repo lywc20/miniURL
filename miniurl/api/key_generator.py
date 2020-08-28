@@ -1,5 +1,5 @@
 import secrets
-from settings import Config
+from instance.settings import Config
 from datetime import datetime
 from ..extensions import mongo
 
