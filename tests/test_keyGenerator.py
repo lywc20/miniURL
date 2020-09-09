@@ -9,7 +9,6 @@ def keygen_fix(mock_pymongo):
     return KeyGenerator(mock_pymongo)
 
 def test_genereateKey(keygen_fix):
-    print(keygen_fix)
     generated_key = keygen_fix.generateKey()
     assert type(generated_key) == str
 
@@ -26,3 +25,17 @@ def test_available(keygen_fix):
     })
 
     assert keygen_fix.available(generated_key) == False
+
+def test_bindUrl(keygen_fix,mock_pymongo):
+    shorten_url = 'abcdef'
+    url = 'https://www.github.com'
+    keygen_fix.bindUrl(shorten_url,url)
+    
+    assert mock_pymongo.db.collection.find_one({'shorten_url':shorten_url},{'_id':1}) == mock_pymongo.db.collection.find_one({'url':url},{'_id':1})
+
+    shorten_url2 = 'abcdeg'
+    url2 = 'https://www.github.org'
+    keygen_fix.bindUrl(shorten_url2,url2)
+
+    assert mock_pymongo.db.collection.find_one({'shorten_url':shorten_url2},{'_id':1}) != mock_pymongo.db.collection.find_one({'url':url},{'_id':1})
+    
