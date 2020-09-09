@@ -5,6 +5,8 @@ from .models import URL_Form
 main = Blueprint('main',__name__)
 import sys
 
+keyGeneratorObject = key_generator.KeyGenerator(mongo)
+
 @main.route('/',methods=['POST','GET'])
 def index():
     if request.method == 'POST':
@@ -13,8 +15,8 @@ def index():
             g.errors = url.errors
             return render_template('index.html')
         else:
-            short_url = key_generator.generateKey()
-            key_generator.bindUrl(short_url,url.url.data)
+            short_url = keyGeneratorObject.generateKey()
+            keyGeneratorObject.bindUrl(short_url,url.url.data)
             g.url = url.url.data
             g.short_url = short_url
             return render_template('index.html')
@@ -25,9 +27,9 @@ def index():
 @main.route('/<string:short_url>/',methods=['GET'])
 def redirect_to_mapped_site(short_url):
     if request.method == 'GET':
-        res = key_generator.findUrl(short_url)
+        res = keyGeneratorObject.findUrl(short_url)
         if res:
-            return redirect('https:' + res['url'])
+            return redirect(res['url'])
         else:
             return render_template('404.html'),404
 

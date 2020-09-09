@@ -1,3 +1,4 @@
+"""
 import os
 import tempfile
 
@@ -16,11 +17,11 @@ def app():
 
 
 def test_config():
-    """Test create_app without passing test config."""
+    #Test create_app without passing test config.
     assert not create_app().testing
     assert create_app({"TESTING": True}).testing
+"""
 
-## Write for URL validation 
 
 #@pytest.fixture
 #def app():

@@ -6,14 +6,12 @@ from instance.settings import Config
 def page_not_found(e):
     return render_template('404.html'),404
 
-def create_app(test_config = None):
+def create_app():
     app = Flask(__name__,instance_relative_config=True)
 
-    if test_config is None:
-        app.config.from_object(Config)
-        mongo.init_app(app)
-    else:
-        app.config.update(test_config)
+    app.config.from_object(Config)
+    mongo.init_app(app)
+
 
 
     with app.app_context():
