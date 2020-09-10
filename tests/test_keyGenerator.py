@@ -8,9 +8,16 @@ from flask_pymongo import PyMongo
 def keygen_fix(mock_pymongo):
     return KeyGenerator(mock_pymongo)
 
+def test_default_constructor(keygen_fix):
+    assert keygen_fix != None
+
 def test_genereateKey(keygen_fix):
     generated_key = keygen_fix.generateKey()
     assert type(generated_key) == str
+
+
+    generated_key2 = keygen_fix.generateKey()
+    assert generated_key2 != generated_key
 
 def test_available(keygen_fix):
     generated_key = keygen_fix.generateKey()
@@ -39,3 +46,12 @@ def test_bindUrl(keygen_fix,mock_pymongo):
 
     assert mock_pymongo.db.collection.find_one({'shorten_url':shorten_url2},{'_id':1}) != mock_pymongo.db.collection.find_one({'url':url},{'_id':1})
     
+def test_findUrl(keygen_fix,mock_pymongo):
+    addr = 'shorten_link'
+    assert keygen_fix.findUrl(addr) == None
+
+    mock_pymongo.db.collection.insert_one({
+        'shorten_url': addr
+    })
+
+    assert keygen_fix.findUrl(addr) != None
